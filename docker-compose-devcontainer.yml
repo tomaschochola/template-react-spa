@@ -18,12 +18,25 @@ services:
       - 'devcontainer'
     ports:
       - host_ip: '127.0.0.1'
+        published: 61001
         protocol: 'tcp'
-        target: 3000
+        target: 61001
     user: 'node:node'
     volumes:
       - './:/workspaces'
       - 'npm-cache:/home/node/.npm'
+  nginx:
+    build:
+      context: './'
+      dockerfile: './Dockerfile'
+      target: 'nginx'
+    networks:
+      - 'devcontainer'
+    ports:
+      - host_ip: '127.0.0.1'
+        published: 61000
+        protocol: 'tcp'
+        target: 61000
 volumes:
   npm-cache:
     external: true
