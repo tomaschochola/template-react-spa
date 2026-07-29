@@ -13,9 +13,7 @@
 import '@fontsource-variable/atkinson-hyperlegible-next';
 import './index.scss';
 
-import 'core-js/stable';
 import './bootstrap';
-import './observability';
 
 function onWindowLoad(callback: () => void): void {
   if (document.readyState === 'complete') {
@@ -26,7 +24,7 @@ function onWindowLoad(callback: () => void): void {
 }
 
 function registerServiceWorker(): void {
-  if (process.env.WEBPACK_MODE !== 'production' || !('serviceWorker' in navigator)) {
+  if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) {
     return;
   }
 

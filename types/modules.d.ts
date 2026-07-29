@@ -66,6 +66,16 @@ declare module '*&as=png' {
   export default value;
 }
 
-declare module '*.scss';
+declare module '*.scss' {
+  const value: CSSStyleSheet;
 
-declare module '*.css';
+  // eslint-disable-next-line no-restricted-exports
+  export default value;
+}
+
+declare module '*.css' {
+  const value: CSSStyleSheet;
+
+  // eslint-disable-next-line no-restricted-exports
+  export default value;
+}

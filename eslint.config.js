@@ -26,7 +26,10 @@ export default new ESLintConfigBuilder()
   .addTypeScriptStrictTypeCheckedRules({ files: typescriptFiles })
   .addTypeScriptStylisticTypeCheckedRules({ files: typescriptFiles })
   .enableTypeScriptProjectService({ files: typescriptFiles })
-  .enableTypeScriptProject({ files: filePatterns.playwrightTypeScriptFiles, project: './tsconfig.playwright.json' })
+  .enableTypeScriptProject({
+    files: filePatterns.playwrightTypeScriptFiles,
+    project: './tsconfig.playwright.json',
+  })
   .addTypeScriptPolicyRules({ files: typescriptFiles })
   .disableTypeScriptTypeChecking({ files: javascriptFiles })
   .addReactRecommendedRules()
