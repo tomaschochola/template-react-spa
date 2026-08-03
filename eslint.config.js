@@ -20,7 +20,7 @@ export default new ESLintConfigBuilder()
   .addNodeGlobalsForConfigFiles()
   .addBrowserGlobals()
   .addGlobalIgnores(filePatterns.defaultIgnorePatterns)
-  .addGlobalIgnores(['node_modules', 'dist', 'generated', 'release', 'tmp', 'test-results'])
+  .addGlobalIgnores(['node_modules', 'dist', 'generated', 'test-results'])
   .addJavaScriptRecommendedRules()
   .addJavaScriptPolicyRules()
   .addTypeScriptStrictTypeCheckedRules({ files: typescriptFiles })
@@ -31,6 +31,12 @@ export default new ESLintConfigBuilder()
     project: './tsconfig.playwright.json',
   })
   .addTypeScriptPolicyRules({ files: typescriptFiles })
+  .addRawConfig({
+    files: ['**/*.d.ts'],
+    rules: {
+      'no-restricted-exports': 'off',
+    },
+  })
   .disableTypeScriptTypeChecking({ files: javascriptFiles })
   .addReactRecommendedRules()
   .addReactJsxRuntimeRules()
