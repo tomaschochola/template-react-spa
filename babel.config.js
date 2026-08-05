@@ -10,7 +10,13 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import config from '@tomaschochola/tooling-babel/templates/typescript_react.js';
+import { BabelConfigBuilder } from '@tomaschochola/tooling-babel';
 
-// eslint-disable-next-line no-restricted-exports
-export default config;
+export default new BabelConfigBuilder({
+  mode: process.env.BABEL_ENV ?? process.env.NODE_ENV ?? 'production',
+})
+  .addPresetEnv()
+  .addPresetTypeScript()
+  .addPresetReact()
+  .addReactCompilerPlugin()
+  .toConfig();

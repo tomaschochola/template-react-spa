@@ -15,12 +15,10 @@ import { ESLintConfigBuilder, filePatterns } from '@tomaschochola/tooling-eslint
 const typescriptFiles = [...filePatterns.allTypeScriptFiles, ...filePatterns.allTsxFiles];
 const javascriptFiles = [...filePatterns.allJavaScriptFiles, ...filePatterns.allJsxFiles];
 
-// eslint-disable-next-line no-restricted-exports
 export default new ESLintConfigBuilder()
   .addNodeGlobalsForConfigFiles()
   .addBrowserGlobals()
-  .addGlobalIgnores(filePatterns.defaultIgnorePatterns)
-  .addGlobalIgnores(['node_modules', 'dist', 'generated', 'test-results'])
+  .addGitIgnoreFile(import.meta.url)
   .addJavaScriptRecommendedRules()
   .addJavaScriptPolicyRules()
   .addTypeScriptStrictTypeCheckedRules({ files: typescriptFiles })
@@ -32,7 +30,7 @@ export default new ESLintConfigBuilder()
   })
   .addTypeScriptPolicyRules({ files: typescriptFiles })
   .addRawConfig({
-    files: ['**/*.d.ts'],
+    files: [...filePatterns.allConfigScriptFiles, '**/*.d.ts', '**/*.d.*.ts'],
     rules: {
       'no-restricted-exports': 'off',
     },

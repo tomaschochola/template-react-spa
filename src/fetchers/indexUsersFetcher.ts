@@ -13,7 +13,7 @@
 import type { LoaderFunctionArgs } from 'react-router';
 
 interface User {
-  readonly id: string;
+  readonly id: number;
   readonly name: string;
   readonly username: string;
   readonly email: string;
@@ -21,8 +21,25 @@ interface User {
   readonly website: string;
 }
 
-function assertUserArray(un: unknown): un is User[] {
-  return Array.isArray(un);
+function isUser(value: unknown): value is User {
+  return typeof value === 'object'
+    && value !== null
+    && 'id' in value
+    && typeof value.id === 'number'
+    && 'name' in value
+    && typeof value.name === 'string'
+    && 'username' in value
+    && typeof value.username === 'string'
+    && 'email' in value
+    && typeof value.email === 'string'
+    && 'phone' in value
+    && typeof value.phone === 'string'
+    && 'website' in value
+    && typeof value.website === 'string';
+}
+
+function isUserArray(value: unknown): value is User[] {
+  return Array.isArray(value) && value.every(isUser);
 }
 
 export type IndexUsersFetcherInterface = Promise<User[]>;
@@ -44,7 +61,7 @@ export async function indexUsersFetcher({ request }: LoaderFunctionArgs): IndexU
 
     const json = await response.json() as unknown;
 
-    if (!assertUserArray(json)) {
+    if (!isUserArray(json)) {
       throw new Error('indexUsersFetcher: invalid response structure');
     }
 

@@ -15,9 +15,28 @@ import { en } from '../src/lang/en';
 import { assertAxe, loadPage } from './test';
 
 test('/', async ({ page }) => {
+  await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
+    await route.fulfill({
+      json: [
+        {
+          email: 'ada@example.com',
+          id: 1,
+          name: 'Ada Lovelace',
+          phone: '+44 20 0000 0000',
+          username: 'ada',
+          website: 'example.com',
+        },
+      ],
+    });
+  });
+
   await loadPage(page, '/');
 
   await expect(page).toHaveTitle(en['routes.index.seo.title']);
+  await expect(page.getByRole('heading', {
+    level: 2,
+    name: 'Ada Lovelace',
+  })).toBeVisible();
 
   await assertAxe(page);
 });

@@ -12,17 +12,16 @@
 
 import { createPlaywrightConfig } from '@tomaschochola/tooling-playwright';
 
-// eslint-disable-next-line no-restricted-exports
+const baseURL = 'http://localhost:61001';
+
 export default createPlaywrightConfig({
+  tsconfig: './tsconfig.playwright.json',
   webServer: {
-    command: 'npm exec --ignore-scripts -- webpack-cli serve --mode=development --config-node-env=development',
-    env: {
-      ...process.env,
-      APP_ENV: 'playwright',
-    },
-    url: 'http://localhost:61001/webpack-dev-server',
+    command:
+      'npm exec --ignore-scripts -- webpack-cli serve --mode=development --config-node-env=development --env APP_ENV=playwright',
+    url: baseURL,
   },
   use: {
-    baseURL: 'http://localhost:61001',
+    baseURL,
   },
 });

@@ -17,7 +17,7 @@ import {
   defineBrowserArtifactPrintPage,
   defineBrowserArtifactSocialCard,
   defineBrowserArtifacts,
-} from '@tomaschochola/tooling-browser-artifacts';
+} from '@tomaschochola/tooling-browser-artifacts/browser';
 
 defineBrowserArtifactPrintPage(customElements);
 defineBrowserArtifactSocialCard(customElements);
