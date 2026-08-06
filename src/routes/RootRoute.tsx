@@ -17,13 +17,9 @@ export function RootRoute(): ReactElement {
   const handleKey = useCallback(({ pathname }: Location): string => pathname, []);
 
   return (
-    <div
-      data-testid="sentinel"
-    >
+    <div data-testid="sentinel">
       <Outlet />
-      <ScrollRestoration
-        getKey={handleKey}
-      />
+      <ScrollRestoration getKey={handleKey} />
     </div>
   );
 }

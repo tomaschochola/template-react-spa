@@ -148,11 +148,5 @@ export function LocaleProvider({ children }: Readonly<LocaleProviderProps>): Rea
 
   useDocumentLang(final);
 
-  return (
-    <I18nProvider
-      locale={final}
-    >
-      {children}
-    </I18nProvider>
-  );
+  return <I18nProvider locale={final}>{children}</I18nProvider>;
 }

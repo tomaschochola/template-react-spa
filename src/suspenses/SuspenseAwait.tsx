@@ -10,13 +10,7 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import {
-  Suspense,
-  useEffect,
-  useState,
-  type ReactElement,
-  type ReactNode,
-} from 'react';
+import { Suspense, useEffect, useState, type ReactElement, type ReactNode } from 'react';
 import { Await } from 'react-router';
 import { UNLIMITED_PROMISE } from '../helpers/promises';
 
@@ -25,16 +19,10 @@ export interface SuspenseAwaitProps<T> {
   readonly delay?: number;
   readonly fallback?: ReactNode;
   readonly errorElement?: ReactNode;
-  readonly children: ((value: T) => ReactNode);
+  readonly children: (value: T) => ReactNode;
 }
 
-export function SuspenseAwait<T>({
-  resolve = UNLIMITED_PROMISE,
-  delay = 200,
-  fallback,
-  errorElement,
-  children,
-}: SuspenseAwaitProps<T>): ReactElement {
+export function SuspenseAwait<T>({ resolve = UNLIMITED_PROMISE, delay = 200, fallback, errorElement, children }: SuspenseAwaitProps<T>): ReactElement {
   const [show, setShow] = useState(delay <= 0);
 
   useEffect(() => {
@@ -52,9 +40,7 @@ export function SuspenseAwait<T>({
   }, [delay]);
 
   return (
-    <Suspense
-      fallback={show || delay <= 0 ? fallback : null}
-    >
+    <Suspense fallback={show || delay <= 0 ? fallback : null}>
       <Await
         resolve={resolve}
         errorElement={errorElement}

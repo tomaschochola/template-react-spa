@@ -25,9 +25,7 @@ export function NotFoundRoute(): ReactElement {
 
   return (
     <main>
-      <h1>
-        {trans.format('routes.not_found.h1')}
-      </h1>
+      <h1>{trans.format('routes.not_found.h1')}</h1>
     </main>
   );
 }

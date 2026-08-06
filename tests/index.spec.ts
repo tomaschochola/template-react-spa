@@ -33,10 +33,12 @@ test('/', async ({ page }) => {
   await loadPage(page, '/');
 
   await expect(page).toHaveTitle(en['routes.index.seo.title']);
-  await expect(page.getByRole('heading', {
-    level: 2,
-    name: 'Ada Lovelace',
-  })).toBeVisible();
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: 'Ada Lovelace',
+    }),
+  ).toBeVisible();
 
   await assertAxe(page);
 });

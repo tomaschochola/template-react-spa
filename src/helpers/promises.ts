@@ -17,7 +17,6 @@ interface WrappedPromise<T> extends Promise<T> {
 }
 
 export function wrapPromise<T>(promise: Promise<T>): Promise<T> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
   const wrapped = promise as WrappedPromise<T>;
 
   wrapped.status = 'pending';

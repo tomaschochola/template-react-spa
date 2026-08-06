@@ -34,22 +34,14 @@ export function IndexRoute(): ReactElement {
 
   return (
     <main>
-      <h1>
-        {trans.format('routes.index.h1')}
-      </h1>
+      <h1>{trans.format('routes.index.h1')}</h1>
       <section>
-        <SuspenseValue
-          resolve={data}
-        >
+        <SuspenseValue resolve={data}>
           {(resolved) => {
             return resolved.map((user) => {
               return (
-                <article
-                  key={user.id}
-                >
-                  <h2>
-                    {user.name}
-                  </h2>
+                <article key={user.id}>
+                  <h2>{user.name}</h2>
                 </article>
               );
             });
