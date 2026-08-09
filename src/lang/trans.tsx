@@ -82,6 +82,26 @@ export function filterLocale(locale: string | null): string | null {
   return null;
 }
 
+function loadLocale(): string | null {
+  try {
+    return filterLocale(localStorage.getItem('locale'));
+  } catch {
+    return null;
+  }
+}
+
+function storeLocale(locale: string | null): void {
+  try {
+    if (locale === null) {
+      localStorage.removeItem('locale');
+    } else {
+      localStorage.setItem('locale', locale);
+    }
+  } catch {
+    // Storage can be unavailable for restricted or opaque origins.
+  }
+}
+
 interface LocaleProviderProps {
   readonly children: ReactElement;
 }
@@ -89,7 +109,7 @@ interface LocaleProviderProps {
 export function LocaleProvider({ children }: Readonly<LocaleProviderProps>): ReactElement {
   const { locale: defaultLocale } = useLocale();
 
-  const [locale, setLocale] = useState<string | null>(() => filterLocale(localStorage.getItem('locale')));
+  const [locale, setLocale] = useState<string | null>(loadLocale);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -100,16 +120,7 @@ export function LocaleProvider({ children }: Readonly<LocaleProviderProps>): Rea
       const filteredLocale = filterLocale(event.detail.locale);
 
       setLocale(filteredLocale);
-
-      if (filteredLocale !== null) {
-        try {
-          localStorage.setItem('locale', filteredLocale);
-        } catch {
-          localStorage.removeItem('locale');
-        }
-      } else {
-        localStorage.removeItem('locale');
-      }
+      storeLocale(filteredLocale);
     };
 
     window.addEventListener('changeLocale', handler);
