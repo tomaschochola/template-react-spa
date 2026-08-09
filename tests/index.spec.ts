@@ -12,7 +12,7 @@
 
 import { expect, test } from '@playwright/test';
 import { en } from '../src/lang/en';
-import { assertAxe, loadPage } from './test';
+import { assertNoAxeViolations, loadPage } from './test';
 
 test('/', async ({ page }) => {
   await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
@@ -40,5 +40,5 @@ test('/', async ({ page }) => {
     }),
   ).toBeVisible();
 
-  await assertAxe(page);
+  await assertNoAxeViolations(page);
 });

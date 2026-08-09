@@ -12,12 +12,12 @@
 
 import { expect, test } from '@playwright/test';
 import { en } from '../src/lang/en';
-import { assertAxe, loadPage } from './test';
+import { assertNoAxeViolations, loadPage } from './test';
 
 test('/not_found', async ({ page }) => {
   await loadPage(page, '/not_found');
 
   await expect(page).toHaveTitle(en['routes.not_found.seo.title']);
 
-  await assertAxe(page);
+  await assertNoAxeViolations(page);
 });
