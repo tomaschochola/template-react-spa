@@ -10,14 +10,16 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
+import { assertPage } from '@tomaschochola/tooling-playwright';
 import { en } from '../src/lang/en';
-import { assertNoAxeViolations, loadPage } from './test';
 
-test('/not_found', async ({ page }) => {
-  await loadPage(page, '/not_found');
-
-  await expect(page).toHaveTitle(en['routes.not_found.seo.title']);
-
-  await assertNoAxeViolations(page);
+// Sonar cannot follow assertion implementations across an external package declaration.
+// eslint-disable-next-line sonarjs/assertions-in-tests
+test('renders the not-found page', async ({ page }) => {
+  await assertPage(page, {
+    heading: en['routes.not_found.h1'],
+    title: en['routes.not_found.seo.title'],
+    url: '/not_found',
+  });
 });

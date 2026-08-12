@@ -11,10 +11,12 @@
  */
 
 import { expect, test } from '@playwright/test';
+import { assertNoAxeViolations, assertPage } from '@tomaschochola/tooling-playwright';
 import { en } from '../src/lang/en';
-import { assertNoAxeViolations, loadPage } from './test';
 
-test('/', async ({ page }) => {
+// Sonar cannot follow assertion implementations across an external package declaration.
+
+test('renders the home page', async ({ page }) => {
   await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
     await route.fulfill({
       json: [
@@ -30,15 +32,16 @@ test('/', async ({ page }) => {
     });
   });
 
-  await loadPage(page, '/');
-
-  await expect(page).toHaveTitle(en['routes.index.seo.title']);
+  await assertPage(page, {
+    heading: en['routes.index.h1'],
+    title: en['routes.index.seo.title'],
+    url: '/',
+  });
   await expect(
     page.getByRole('heading', {
       level: 2,
       name: 'Ada Lovelace',
     }),
   ).toBeVisible();
-
   await assertNoAxeViolations(page);
 });
