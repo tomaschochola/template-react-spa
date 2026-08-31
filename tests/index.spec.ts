@@ -17,31 +17,31 @@ import { en } from '../src/lang/en';
 // Sonar cannot follow assertion implementations across an external package declaration.
 
 test('renders the home page', async ({ page }) => {
-  await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
-    await route.fulfill({
-      json: [
-        {
-          email: 'ada@example.com',
-          id: 1,
-          name: 'Ada Lovelace',
-          phone: '+44 20 0000 0000',
-          username: 'ada',
-          website: 'example.com',
-        },
-      ],
+    await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
+        await route.fulfill({
+            json: [
+                {
+                    email: 'ada@example.com',
+                    id: 1,
+                    name: 'Ada Lovelace',
+                    phone: '+44 20 0000 0000',
+                    username: 'ada',
+                    website: 'example.com',
+                },
+            ],
+        });
     });
-  });
 
-  await assertPage(page, {
-    heading: en['routes.index.h1'],
-    title: en['routes.index.seo.title'],
-    url: '/',
-  });
-  await expect(
-    page.getByRole('heading', {
-      level: 2,
-      name: 'Ada Lovelace',
-    }),
-  ).toBeVisible();
-  await assertNoAxeViolations(page);
+    await assertPage(page, {
+        heading: en['routes.index.h1'],
+        title: en['routes.index.seo.title'],
+        url: '/',
+    });
+    await expect(
+        page.getByRole('heading', {
+            level: 2,
+            name: 'Ada Lovelace',
+        }),
+    ).toBeVisible();
+    await assertNoAxeViolations(page);
 });

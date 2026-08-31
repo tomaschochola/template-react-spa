@@ -11,44 +11,44 @@
  */
 
 interface WrappedPromise<T> extends Promise<T> {
-  status: 'pending' | 'fulfilled' | 'rejected';
-  value: T | undefined;
-  reason: unknown;
+    status: 'pending' | 'fulfilled' | 'rejected';
+    value: T | undefined;
+    reason: unknown;
 }
 
 export function wrapPromise<T>(promise: Promise<T>): Promise<T> {
-  const wrapped = promise as WrappedPromise<T>;
+    const wrapped = promise as WrappedPromise<T>;
 
-  wrapped.status = 'pending';
-  wrapped.value = undefined;
-  wrapped.reason = undefined;
+    wrapped.status = 'pending';
+    wrapped.value = undefined;
+    wrapped.reason = undefined;
 
-  return wrapped.then(
-    (value: T) => {
-      wrapped.status = 'fulfilled';
-      wrapped.value = value;
-      wrapped.reason = undefined;
+    return wrapped.then(
+        (value: T) => {
+            wrapped.status = 'fulfilled';
+            wrapped.value = value;
+            wrapped.reason = undefined;
 
-      return value;
-    },
-    (reason: unknown) => {
-      wrapped.status = 'rejected';
-      wrapped.reason = reason;
-      wrapped.value = undefined;
+            return value;
+        },
+        (reason: unknown) => {
+            wrapped.status = 'rejected';
+            wrapped.reason = reason;
+            wrapped.value = undefined;
 
-      throw reason;
-    },
-  );
+            throw reason;
+        },
+    );
 }
 
 export const UNLIMITED_PROMISE = new Promise<never>(() => {
-  return undefined;
+    return undefined;
 });
 
 export function unlimitedPromise<T>(promise: Promise<T> | undefined): Promise<T> {
-  if (promise === undefined) {
-    return UNLIMITED_PROMISE;
-  }
+    if (promise === undefined) {
+        return UNLIMITED_PROMISE;
+    }
 
-  return promise;
+    return promise;
 }

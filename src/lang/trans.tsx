@@ -19,145 +19,145 @@ import { useDocumentLang } from './seo';
 const cache = new Map<string, Promise<Strings>>();
 
 type LocaleEvent = CustomEvent<{
-  locale: string | null;
+    locale: string | null;
 }>;
 
 function isLocaleEvent(event: Event): event is LocaleEvent {
-  return event.type === 'changeLocale' && 'detail' in event && typeof event.detail === 'object' && event.detail !== null && 'locale' in event.detail;
+    return event.type === 'changeLocale' && 'detail' in event && typeof event.detail === 'object' && event.detail !== null && 'locale' in event.detail;
 }
 
 export function changeLocale(locale: string | null): void {
-  const event: LocaleEvent = new CustomEvent('changeLocale', { detail: { locale: locale } });
+    const event: LocaleEvent = new CustomEvent('changeLocale', { detail: { locale: locale } });
 
-  window.dispatchEvent(event);
+    window.dispatchEvent(event);
 }
 
 function getStrings(locale: string): Promise<Strings> {
-  const cached = cache.get(locale);
+    const cached = cache.get(locale);
 
-  if (cached !== undefined) {
-    return cached;
-  }
+    if (cached !== undefined) {
+        return cached;
+    }
 
-  let loader;
+    let loader;
 
-  if (locale === 'en') {
-    loader = import('./en').then((module) => module.en);
-  } else if (locale === 'cs') {
-    loader = import('./cs').then((module) => module.cs);
-  } else {
-    throw new Error(`Locale ${locale} not found`);
-  }
+    if (locale === 'en') {
+        loader = import('./en').then((module) => module.en);
+    } else if (locale === 'cs') {
+        loader = import('./cs').then((module) => module.cs);
+    } else {
+        throw new Error(`Locale ${locale} not found`);
+    }
 
-  const promise = wrapPromise(loader);
+    const promise = wrapPromise(loader);
 
-  cache.set(locale, promise);
+    cache.set(locale, promise);
 
-  return promise;
+    return promise;
 }
 
 export function changeStrings(locale: string): Promise<Strings> {
-  return getStrings(locale).then((strings) => {
-    changeLocale(locale);
+    return getStrings(locale).then((strings) => {
+        changeLocale(locale);
 
-    return strings;
-  });
+        return strings;
+    });
 }
 
 export function useTrans() {
-  const { locale } = useLocale();
+    const { locale } = useLocale();
 
-  const promise = getStrings(locale);
+    const promise = getStrings(locale);
 
-  return useLocalizedStringFormatter({ [locale]: use(promise) });
+    return useLocalizedStringFormatter({ [locale]: use(promise) });
 }
 
 export function filterLocale(locale: string | null): string | null {
-  if (locale?.startsWith('en') === true) return 'en';
+    if (locale?.startsWith('en') === true) return 'en';
 
-  if (locale?.startsWith('cs') === true) return 'cs';
+    if (locale?.startsWith('cs') === true) return 'cs';
 
-  if (locale?.startsWith('sk') === true) return 'cs';
+    if (locale?.startsWith('sk') === true) return 'cs';
 
-  return null;
+    return null;
 }
 
 function loadLocale(): string | null {
-  try {
-    return filterLocale(localStorage.getItem('locale'));
-  } catch {
-    return null;
-  }
+    try {
+        return filterLocale(localStorage.getItem('locale'));
+    } catch {
+        return null;
+    }
 }
 
 function storeLocale(locale: string | null): void {
-  try {
-    if (locale === null) {
-      localStorage.removeItem('locale');
-    } else {
-      localStorage.setItem('locale', locale);
+    try {
+        if (locale === null) {
+            localStorage.removeItem('locale');
+        } else {
+            localStorage.setItem('locale', locale);
+        }
+    } catch {
+        // Storage can be unavailable for restricted or opaque origins.
     }
-  } catch {
-    // Storage can be unavailable for restricted or opaque origins.
-  }
 }
 
 interface LocaleProviderProps {
-  readonly children: ReactElement;
+    readonly children: ReactElement;
 }
 
 export function LocaleProvider({ children }: Readonly<LocaleProviderProps>): ReactElement {
-  const { locale: defaultLocale } = useLocale();
+    const { locale: defaultLocale } = useLocale();
 
-  const [locale, setLocale] = useState<string | null>(loadLocale);
+    const [locale, setLocale] = useState<string | null>(loadLocale);
 
-  useEffect(() => {
-    const handler = (event: Event) => {
-      if (!isLocaleEvent(event)) {
-        return;
-      }
+    useEffect(() => {
+        const handler = (event: Event) => {
+            if (!isLocaleEvent(event)) {
+                return;
+            }
 
-      const filteredLocale = filterLocale(event.detail.locale);
+            const filteredLocale = filterLocale(event.detail.locale);
 
-      setLocale(filteredLocale);
-      storeLocale(filteredLocale);
-    };
+            setLocale(filteredLocale);
+            storeLocale(filteredLocale);
+        };
 
-    window.addEventListener('changeLocale', handler);
+        window.addEventListener('changeLocale', handler);
 
-    return () => {
-      window.removeEventListener('changeLocale', handler);
-    };
-  }, [setLocale]);
+        return () => {
+            window.removeEventListener('changeLocale', handler);
+        };
+    }, [setLocale]);
 
-  useEffect(() => {
-    if (typeof requestIdleCallback === 'function' && typeof cancelIdleCallback === 'function') {
-      const requestIdleTimeout = requestIdleCallback(
-        () => {
-          void getStrings('en');
-          void getStrings('cs');
-        },
-        { timeout: 10000 },
-      );
+    useEffect(() => {
+        if (typeof requestIdleCallback === 'function' && typeof cancelIdleCallback === 'function') {
+            const requestIdleTimeout = requestIdleCallback(
+                () => {
+                    void getStrings('en');
+                    void getStrings('cs');
+                },
+                { timeout: 10000 },
+            );
 
-      return () => {
-        cancelIdleCallback(requestIdleTimeout);
-      };
-    }
+            return () => {
+                cancelIdleCallback(requestIdleTimeout);
+            };
+        }
 
-    const timeout = setTimeout(() => {
-      void getStrings('en');
-      void getStrings('cs');
-    }, 10000);
+        const timeout = setTimeout(() => {
+            void getStrings('en');
+            void getStrings('cs');
+        }, 10000);
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
 
-  const final = filterLocale(locale) ?? filterLocale(defaultLocale) ?? 'en';
+    const final = filterLocale(locale) ?? filterLocale(defaultLocale) ?? 'en';
 
-  useDocumentLang(final);
+    useDocumentLang(final);
 
-  return <I18nProvider locale={final}>{children}</I18nProvider>;
+    return <I18nProvider locale={final}>{children}</I18nProvider>;
 }

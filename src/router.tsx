@@ -18,24 +18,24 @@ import { NotFoundRoute } from './routes/NotFoundRoute';
 import { RootRoute } from './routes/RootRoute';
 
 export function createRouter() {
-  return createBrowserRouter([
-    {
-      path: INDEX_USERS_FETCHER,
-      loader: indexUsersFetcher,
-    },
-    {
-      element: <RootRoute />,
-      errorElement: <RouteErrorBoundary />,
-      children: [
+    return createBrowserRouter([
         {
-          index: true,
-          element: <IndexRoute />,
+            path: INDEX_USERS_FETCHER,
+            loader: indexUsersFetcher,
         },
         {
-          path: '*',
-          element: <NotFoundRoute />,
+            element: <RootRoute />,
+            errorElement: <RouteErrorBoundary />,
+            children: [
+                {
+                    index: true,
+                    element: <IndexRoute />,
+                },
+                {
+                    path: '*',
+                    element: <NotFoundRoute />,
+                },
+            ],
         },
-      ],
-    },
-  ]);
+    ]);
 }

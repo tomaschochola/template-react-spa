@@ -16,17 +16,17 @@ const typescriptFiles = [...filePatterns.allTypeScriptFiles, ...filePatterns.all
 const javascriptFiles = [...filePatterns.allJavaScriptFiles, ...filePatterns.allJsxFiles];
 
 export default new ESLintConfigBuilder()
-  .addNodeGlobalsForConfigFiles()
-  .addBrowserGlobals()
-  .addGitIgnoreFile(import.meta.url)
-  .addJavaScriptRecommendedRules()
-  .addTypeScriptStrictTypeCheckedRules({ files: typescriptFiles })
-  .enableTypeScriptProjectService({ files: typescriptFiles })
-  .enableTypeScriptProject({
-    files: filePatterns.playwrightTypeScriptFiles,
-    project: './tsconfig.playwright.json',
-  })
-  .disableTypeScriptTypeChecking({ files: javascriptFiles })
-  .addReactHooksRecommendedLatestRules()
-  .addSonarJsRecommendedRules()
-  .toConfig();
+    .addNodeGlobalsForConfigFiles()
+    .addBrowserGlobals()
+    .addGitIgnoreFile(import.meta.url)
+    .addJavaScriptRecommendedRules()
+    .addTypeScriptStrictTypeCheckedRules({ files: typescriptFiles })
+    .enableTypeScriptProjectService({ files: typescriptFiles })
+    .enableTypeScriptProject({
+        files: filePatterns.playwrightTypeScriptFiles,
+        project: './tsconfig.playwright.json',
+    })
+    .disableTypeScriptTypeChecking({ files: javascriptFiles })
+    .addReactHooksRecommendedLatestRules()
+    .addSonarJsRecommendedRules()
+    .toConfig();

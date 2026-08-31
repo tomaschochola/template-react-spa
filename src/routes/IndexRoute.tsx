@@ -18,35 +18,35 @@ import { useTrans } from '../lang/trans';
 import { SuspenseValue } from '../suspenses/SuspenseValue';
 
 export function IndexRoute(): ReactElement {
-  const trans = useTrans();
+    const trans = useTrans();
 
-  useSeo({
-    title: trans.format('routes.index.seo.title'),
-    description: trans.format('routes.index.seo.description'),
-  });
+    useSeo({
+        title: trans.format('routes.index.seo.title'),
+        description: trans.format('routes.index.seo.description'),
+    });
 
-  const { load, data } = useFetcher<Awaited<IndexUsersFetcherInterface>>({ key: INDEX_USERS_FETCHER });
+    const { load, data } = useFetcher<Awaited<IndexUsersFetcherInterface>>({ key: INDEX_USERS_FETCHER });
 
-  useEffect(() => {
-    void load(INDEX_USERS_FETCHER);
-  }, [load]);
+    useEffect(() => {
+        void load(INDEX_USERS_FETCHER);
+    }, [load]);
 
-  return (
-    <main>
-      <h1>{trans.format('routes.index.h1')}</h1>
-      <section>
-        <SuspenseValue resolve={data}>
-          {(resolved) => {
-            return resolved.map((user) => {
-              return (
-                <article key={user.id}>
-                  <h2>{user.name}</h2>
-                </article>
-              );
-            });
-          }}
-        </SuspenseValue>
-      </section>
-    </main>
-  );
+    return (
+        <main>
+            <h1>{trans.format('routes.index.h1')}</h1>
+            <section>
+                <SuspenseValue resolve={data}>
+                    {(resolved) => {
+                        return resolved.map((user) => {
+                            return (
+                                <article key={user.id}>
+                                    <h2>{user.name}</h2>
+                                </article>
+                            );
+                        });
+                    }}
+                </SuspenseValue>
+            </section>
+        </main>
+    );
 }
