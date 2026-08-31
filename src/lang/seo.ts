@@ -14,26 +14,13 @@ import { useEffect } from 'react';
 
 export interface MetaArgs {
   title?: string;
-  keywords?: string;
   description?: string;
 }
 
-export function useSeo({ title, keywords, description }: MetaArgs): void {
+export function useSeo({ title, description }: MetaArgs): void {
   useEffect(() => {
     if (title !== undefined) {
       document.title = title;
-    }
-
-    if (keywords !== undefined) {
-      let k = document.querySelector('meta[name="keywords"]');
-
-      if (k === null) {
-        k = document.createElement('meta');
-        k.setAttribute('name', 'keywords');
-        document.head.appendChild(k);
-      }
-
-      k.setAttribute('content', keywords);
     }
 
     if (description !== undefined) {
@@ -47,7 +34,7 @@ export function useSeo({ title, keywords, description }: MetaArgs): void {
 
       d.setAttribute('content', description);
     }
-  }, [title, keywords, description]);
+  }, [title, description]);
 }
 
 export function useDocumentLang(locale: string): void {

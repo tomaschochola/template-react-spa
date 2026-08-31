@@ -19,7 +19,6 @@ export function NotFoundRoute(): ReactElement {
 
   useSeo({
     title: trans.format('routes.not_found.seo.title'),
-    keywords: trans.format('routes.not_found.seo.keywords'),
     description: trans.format('routes.not_found.seo.description'),
   });
 
