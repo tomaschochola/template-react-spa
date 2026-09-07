@@ -11,10 +11,8 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { assertNoAxeViolations, assertPage } from '@tomaschochola/tooling-playwright';
-import { en } from '../src/lang/en';
-
-// Sonar cannot follow assertion implementations across an external package declaration.
+import { assertNoAxeViolations, assertStandardPage } from '@tomaschochola/tooling-playwright';
+import { en } from '../../src/lang/en';
 
 test('renders the home page', async ({ page }) => {
     await page.route('https://jsonplaceholder.typicode.com/users', async (route) => {
@@ -32,7 +30,7 @@ test('renders the home page', async ({ page }) => {
         });
     });
 
-    await assertPage(page, {
+    await assertStandardPage(page, {
         heading: en['routes.index.h1'],
         title: en['routes.index.seo.title'],
         url: '/',

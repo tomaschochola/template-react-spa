@@ -11,13 +11,11 @@
  */
 
 import { test } from '@playwright/test';
-import { assertPage } from '@tomaschochola/tooling-playwright';
-import { en } from '../src/lang/en';
+import { assertStandardPage } from '@tomaschochola/tooling-playwright';
+import { en } from '../../src/lang/en';
 
-// Sonar cannot follow assertion implementations across an external package declaration.
-// eslint-disable-next-line sonarjs/assertions-in-tests
 test('renders the not-found page', async ({ page }) => {
-    await assertPage(page, {
+    await assertStandardPage(page, {
         heading: en['routes.not_found.h1'],
         title: en['routes.not_found.seo.title'],
         url: '/not_found',
