@@ -38,9 +38,9 @@
     ],
     "id": "./",
     "lang": "en",
-    "name": "React SPA Template",
+    "name": "tomaschochola/template-react-spa",
     "scope": "./",
-    "short_name": "React SPA",
+    "short_name": "tomaschochola/template-react-spa",
     "start_url": "./",
     "theme_color": "#fdf7ff"
 }
