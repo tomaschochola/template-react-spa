@@ -86,7 +86,7 @@ function storeLocale(locale: string | null): void {
             localStorage.setItem('locale', locale);
         }
     } catch {
-        // Storage can be unavailable for restricted or opaque origins.
+        return;
     }
 }
 

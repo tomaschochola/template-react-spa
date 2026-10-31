@@ -1,12 +1,14 @@
 import type { Strings } from './en';
 
 const cs: Strings = {
-    'routes.index.h1': 'Ahoj světe!',
-    'routes.index.seo.description': 'Úvodní stránka aplikace',
-    'routes.index.seo.title': 'Domů',
-    'routes.not_found.h1': 'Stránka nenalezena!',
-    'routes.not_found.seo.description': 'Stránka nenalezena, chyba 404',
-    'routes.not_found.seo.title': 'Stránka nenalezena',
+    'routes.index.h1': 'Hello, world!',
+    'routes.index.seo.description': 'Hello, world!',
+    'routes.index.seo.keywords': 'tomaschochola, TomasChochola, Tomas Chochola, Tomáš Chochola, template-react-spa',
+    'routes.index.seo.title': 'Hello, world!',
+    'routes.not_found.h1': 'Not Found',
+    'routes.not_found.seo.description': 'Not Found',
+    'routes.not_found.seo.keywords': 'tomaschochola, TomasChochola, Tomas Chochola, Tomáš Chochola, not-found',
+    'routes.not_found.seo.title': 'Not Found',
 };
 
 export { cs };

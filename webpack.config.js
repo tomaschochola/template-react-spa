@@ -43,6 +43,7 @@ export default function (env = {}, argv = {}) {
         .addDefinePlugin({
             'process.env.APP_ENV': JSON.stringify(appEnv),
             'process.env.APP_NAME': JSON.stringify(appName),
+            'process.env.APP_URL': JSON.stringify(publicUrl),
             'process.env.APP_VERSION': JSON.stringify(appVersion),
         })
         .addHtmlPlugin({

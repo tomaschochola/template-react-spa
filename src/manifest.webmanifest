@@ -1,6 +1,6 @@
 {
     "background_color": "#fdf7ff",
-    "description": "React single-page application template with TypeScript, Webpack, Playwright, and OpenTelemetry.",
+    "description": "github.com/tomaschochola/template-react-spa",
     "display": "standalone",
     "icons": [
         {
@@ -38,9 +38,9 @@
     ],
     "id": "./",
     "lang": "en",
-    "name": "tomaschochola/template-react-spa",
+    "name": "github.com/tomaschochola/template-react-spa",
     "scope": "./",
-    "short_name": "tomaschochola/template-react-spa",
+    "short_name": "github.com/tomaschochola/template-react-spa",
     "start_url": "./",
     "theme_color": "#fdf7ff"
 }
