@@ -10,22 +10,7 @@ interface User {
 }
 
 function isUser(value: unknown): value is User {
-    return (
-        typeof value === 'object' &&
-        value !== null &&
-        'id' in value &&
-        typeof value.id === 'number' &&
-        'name' in value &&
-        typeof value.name === 'string' &&
-        'username' in value &&
-        typeof value.username === 'string' &&
-        'email' in value &&
-        typeof value.email === 'string' &&
-        'phone' in value &&
-        typeof value.phone === 'string' &&
-        'website' in value &&
-        typeof value.website === 'string'
-    );
+    return typeof value === 'object' && value !== null && 'id' in value && typeof value.id === 'number' && 'name' in value && typeof value.name === 'string' && 'username' in value && typeof value.username === 'string' && 'email' in value && typeof value.email === 'string' && 'phone' in value && typeof value.phone === 'string' && 'website' in value && typeof value.website === 'string';
 }
 
 function isUserArray(value: unknown): value is User[] {
